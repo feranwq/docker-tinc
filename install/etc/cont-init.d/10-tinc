@@ -62,7 +62,7 @@ EOF
     cat << EOF > /etc/tinc/"${NETWORK}"/tinc.conf
 Name = ${NODE}
 BindToAddress * ${LISTEN_PORT}
-AddressFamily = ipv4
+AddressFamily = any
 Device = /dev/net/tun
 Interface = ${INTERFACE}
 EOF
