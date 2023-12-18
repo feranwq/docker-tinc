@@ -6,17 +6,18 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/tiredofit/tinc.svg?style=flat-square&logo=docker)](https://hub.docker.com/r/tiredofit/tinc/)
 [![Become a sponsor](https://img.shields.io/badge/sponsor-tiredofit-181717.svg?logo=github&style=flat-square)](https://github.com/sponsors/tiredofit)
 [![Paypal Donate](https://img.shields.io/badge/donate-paypal-00457c.svg?logo=paypal&style=flat-square)](https://www.paypal.me/tiredofit)
-* * *
+
+---
 
 ## About
 
 This will build a Docker Image for [tinc](https://www.tinc.org/) - A VPN service.
 
-* Latest Release automatically downloaded and compiled (1.1 test series)
-* Automatically downloads peer configuration files from git server based on network name.
-* Configurable Options for resyncing information from git server
-* Configurable Options to enable various types of compression or enable debugging for troubleshooting.
-* Logrotate Installed and will rotate logs daily and hold for 7 days.
+- Latest Release automatically downloaded and compiled (1.1 test series)
+- Automatically downloads peer configuration files from git server based on network name.
+- Configurable Options for resyncing information from git server
+- Configurable Options to enable various types of compression or enable debugging for troubleshooting.
+- Logrotate Installed and will rotate logs daily and hold for 7 days.
 
 **Do NOT use a public git server to host your repository, as it will reveal personal details of your network! You have been warned**
 
@@ -26,49 +27,52 @@ This will build a Docker Image for [tinc](https://www.tinc.org/) - A VPN service
 
 ## Table of Contents
 
-- [About](#about)
-- [Maintainer](#maintainer)
-- [Table of Contents](#table-of-contents)
-- [Prerequisites and Assumptions](#prerequisites-and-assumptions)
-- [Installation](#installation)
-  - [Build from Source](#build-from-source)
-  - [Prebuilt Images](#prebuilt-images)
-    - [Multi Architecture](#multi-architecture)
-- [Configuration](#configuration)
-  - [Quick Start](#quick-start)
-  - [Persistent Storage](#persistent-storage)
-  - [Environment Variables](#environment-variables)
-    - [Base Images used](#base-images-used)
-  - [Networking](#networking)
-- [Maintenance](#maintenance)
-  - [Shell Access](#shell-access)
-- [Support](#support)
-  - [Usage](#usage)
-  - [Bugfixes](#bugfixes)
-  - [Feature Requests](#feature-requests)
-  - [Updates](#updates)
-- [License](#license)
-- [References](#references)
+- [github.com/tiredofit/docker-tinc](#githubcomtiredofitdocker-tinc)
+  - [About](#about)
+  - [Maintainer](#maintainer)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites and Assumptions](#prerequisites-and-assumptions)
+  - [Installation](#installation)
+    - [Build from Source](#build-from-source)
+    - [Prebuilt Images](#prebuilt-images)
+      - [Multi Architecture](#multi-architecture)
+  - [Configuration](#configuration)
+    - [Quick Start](#quick-start)
+    - [Persistent Storage](#persistent-storage)
+    - [Environment Variables](#environment-variables)
+      - [Base Images used](#base-images-used)
+    - [Networking](#networking)
+  - [Maintenance](#maintenance)
+    - [Shell Access](#shell-access)
+  - [Support](#support)
+    - [Usage](#usage)
+    - [Bugfixes](#bugfixes)
+    - [Feature Requests](#feature-requests)
+    - [Updates](#updates)
+  - [License](#license)
+  - [References](#references)
 
 ## Prerequisites and Assumptions
 
-* This image relies on a private Git Repository to store configuration data. Create a private repo and user account in git before proceeding.
+- This image relies on a private Git Repository to store configuration data. Create a private repo and user account in git before proceeding.
 
 ## Installation
 
 ### Build from Source
+
 Clone this repository and build the image with `docker build <arguments> (imagename) .`
 
 ### Prebuilt Images
+
 Builds of the image are available on [Docker Hub](https://hub.docker.com/r/tiredofit/tinc)
 
-```bash
+````bash
 docker pull docker.io/tiredofit/docker-tinc:(imagetag)
 Builds of the image are also available on the [Github Container Registry](https://github.com/tiredofit/docker-tinc/pkgs/container/docker-tinc)
 
 ```bash
 docker pull ghcr.io/tiredofit/docker-tinc:(imagetag)
-```
+````
 
 The following image tags are available along with their tagged release based on what's written in the [Changelog](CHANGELOG.md):
 
@@ -77,17 +81,18 @@ The following image tags are available along with their tagged release based on 
 | Alpine       | `:latest` |
 
 #### Multi Architecture
+
 Images are built primarily for `amd64` architecture, and may also include builds for `arm/v7`, `arm64` and others. These variants are all unsupported. Consider [sponsoring](https://github.com/sponsors/tiredofit) my work so that I can work with various hardware. To see if this image supports multiple architecures, type `docker manifest (image):(tag)`
 
 ## Configuration
 
 ### Quick Start
 
-* The quickest way to get started is using [docker-compose](https://docs.docker.com/compose/). See the examples folder for a working [compose.yml](examples/compose.yml) that can be modified for development or production use.
+- The quickest way to get started is using [docker-compose](https://docs.docker.com/compose/). See the examples folder for a working [compose.yml](examples/compose.yml) that can be modified for development or production use.
 
-* Set various [environment variables](#environment-variables) to understand the capabilities of this image.
-* Map [persistent storage](#data-volumes) for access to configuration and data files for backup.
-* Alter Firewall Configuration to allow access to [network ports](#networking)
+- Set various [environment variables](#environment-variables) to understand the capabilities of this image.
+- Map [persistent storage](#data-volumes) for access to configuration and data files for backup.
+- Alter Firewall Configuration to allow access to [network ports](#networking)
 
 ### Persistent Storage
 
@@ -127,11 +132,14 @@ Be sure to view the following repositories to understand all the customizable op
 | `LOG_LEVEL`            | Adjustable Debug level as per tinc documentation (e.g 5)                                                             | `2`             |
 | `LOG_PATH`             | Log Path                                                                                                             | `/var/log/tinc` |
 | `MAC_LENGTH`           | MAC Length                                                                                                           | `16`            |
-| `NETWORK`              | The VPN name -  (e.g. `securenetwork`)                                                                               |                 |
+| `NETWORK`              | The VPN name - (e.g. `securenetwork`)                                                                                |                 |
 | `NODE`                 | The unique hostname of the machine joining the VPN (e.g. `hostname`)                                                 |                 |
 | `PEERS`                | Which server should be used to contact first to create the mesh VPN (e.g. `host1_hostname_com` `host2_hostname_com`) |                 |
 | `PRIVATE_IP`           | The private IP that is assigned to this machine on the VPN (e.g. `172.16.23.13`)                                     |                 |
 | `PUBLIC_IP`            | The public IP you wish to listen on (e.g. `137.233.212.121`)                                                         |                 |
+| `SUBNETS`              | The subnet which this tinc daemon will serve (e.g. `192.168.1.0/24` `192.168.2.0/24`)                                |                 |
+| `TINC_UP`              | Tinc-up (e.g. `route add`)                                                                                           |                 |
+| `TINC_DOWN`            | Tinc-down (e.g. `route del`)                                                                                         |                 |
 | `SETUP_TYPE`           | Utilize these above environment variables `AUTO` or `MANUAL`                                                         | `AUTO`          |
 | `WATCHDOG_HOST`        | IP Address or hostname of host to check connectivity                                                                 |                 |
 | `WATCHDOG_FREQUENCY`   | How many seconds to wait between checks on host                                                                      | `60`            |
@@ -146,37 +154,45 @@ The following ports are exposed.
 
 > **NOTE**: You must also allow capabilities for `NET_ADMIN` to docker to be able to have access to the IP Stack. Also, you must create `/dev/tun` as a device. If you want to make the Docker Host be able to be accessible you also must add `network:host` as an option otherwise only the containers will be accessible. See the working compose.yml example as shown above.
 
-* * *
+---
+
 ## Maintenance
 
 ### Shell Access
 
 For debugging and maintenance purposes you may want access the containers shell.
 
-````bash
+```bash
 docker exec -it (whatever your container name is) bash
-````
+```
 
 ## Support
 
 These images were built to serve a specific need in a production environment and gradually have had more functionality added based on requests from the community.
+
 ### Usage
+
 - The [Discussions board](../../discussions) is a great place for working with the community on tips and tricks of using this image.
 - [Sponsor me](https://tiredofit.ca/sponsor) for personalized support
 
 ### Bugfixes
+
 - Please, submit a [Bug Report](issues/new) if something isn't working as expected. I'll do my best to issue a fix in short order.
 
 ### Feature Requests
+
 - Feel free to submit a feature request, however there is no guarantee that it will be added, or at what timeline.
 - [Sponsor me](https://tiredofit.ca/sponsor) regarding development of features.
 
 ### Updates
+
 - Best effort to track upstream changes, More priority if I am actively using the image in a production environment.
 - [Sponsor me](https://tiredofit.ca/sponsor) for up to date releases.
 
 ## License
+
 MIT. See [LICENSE](LICENSE) for more details.
+
 ## References
 
-* https://www.tinc-vpn.org
+- https://www.tinc-vpn.org
