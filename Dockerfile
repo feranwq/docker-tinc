@@ -53,6 +53,21 @@ RUN source /assets/functions/00-container && \
     rm -rf /etc/logrotate.d/* \
     rm -rf /usr/src/*
 
+# squid
+RUN apk add --no-cache --purge -uU squid && \
+    rm -rf /var/cache/apk/* /tmp/* && \
+    sed -i '1 i\acl all src all' /etc/squid/squid.conf && \
+    sed -i '2 i\http_access allow all' /etc/squid/squid.conf && \
+    echo 'access_log stdio:/var/log/tinc/squid_access.log' >> /etc/squid/squid.conf && \
+    echo 'cache_log stdio:/var/log/tinc/squid_cache.log' >> /etc/squid/squid.conf && \
+    echo 'cache deny all' >> /etc/squid/squid.conf && \
+    echo 'on_unsupported_protocol tunnel all' >> /etc/squid/squid.conf && \
+    echo 'via off' >> /etc/squid/squid.conf && \
+    echo 'forwarded_for delete' >> /etc/squid/squid.conf && \
+    echo 'http_upgrade_request_protocols WebSocket allow all' >> /etc/squid/squid.conf && \
+    echo 'http_upgrade_request_protocols OTHER allow all' >> /etc/squid/squid.conf
+
 EXPOSE 655/tcp 655/udp
+EXPOSE 3128/tcp
 
 COPY install /
