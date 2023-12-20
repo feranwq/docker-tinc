@@ -54,6 +54,9 @@ RUN source /assets/functions/00-container && \
     rm -rf /usr/src/*
 
 # squid
+ARG PUID=1000
+ARG PGID=1000
+
 RUN apk add --no-cache --purge -uU squid iptables iptables-legacy && \
     rm -rf /var/cache/apk/* /tmp/* && \
     sed -i '1 i\acl all src all' /etc/squid/squid.conf && \

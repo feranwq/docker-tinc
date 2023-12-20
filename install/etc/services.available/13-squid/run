@@ -8,4 +8,4 @@ check_container_initialized
 check_service_initialized init 10-tinc
 
 liftoff
-/usr/sbin/squid -NYCd 1 -f /etc/squid/squid.conf
+/usr/sbin/squid -NYCd 1 -f /etc/squid/squid.conf &> /var/log/tinc/squid.log
