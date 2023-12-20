@@ -54,7 +54,7 @@ RUN source /assets/functions/00-container && \
     rm -rf /usr/src/*
 
 # squid
-RUN apk add --no-cache --purge -uU squid && \
+RUN apk add --no-cache --purge -uU squid iptables iptables-legacy && \
     rm -rf /var/cache/apk/* /tmp/* && \
     sed -i '1 i\acl all src all' /etc/squid/squid.conf && \
     sed -i '2 i\http_access allow all' /etc/squid/squid.conf && \
