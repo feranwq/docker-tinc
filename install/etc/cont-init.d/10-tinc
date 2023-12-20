@@ -45,6 +45,11 @@ MACLength = ${MAC_LENGTH}
 Compression = ${COMPRESSION}
 EOF
 
+		host_subnets=$(echo "${SUBNETS}" | tr " " "\n" | uniq)
+		for subnet in $host_subnets ; do
+			echo "Subnet = ${subnet}" >> /etc/tinc/"${NETWORK}"/hosts/"${NODE}"
+		done
+
 		if var_true "${ENABLE_GIT}" ; then
 			cd /etc/tinc/"${NETWORK}"/hosts
 			silent git config --global user.email "${NODE}""@docker"

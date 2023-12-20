@@ -137,6 +137,7 @@ Be sure to view the following repositories to understand all the customizable op
 | `PEERS`                | Which server should be used to contact first to create the mesh VPN (e.g. `host1_hostname_com` `host2_hostname_com`) |                 |
 | `PRIVATE_IP`           | The private IP that is assigned to this machine on the VPN (e.g. `172.16.23.13`)                                     |                 |
 | `PUBLIC_IP`            | The public IP you wish to listen on (e.g. `137.233.212.121`)                                                         |                 |
+| `SUBNETS`              | The subnet which this tinc daemon will serve (e.g. `192.168.1.0/24` `192.168.2.0/24`)                                |                 |
 | `TINC_UP`              | Tinc-up (e.g. `route add`)                                                                                           |                 |
 | `TINC_DOWN`            | Tinc-down (e.g. `route del`)                                                                                         |                 |
 | `SETUP_TYPE`           | Utilize these above environment variables `AUTO` or `MANUAL`                                                         | `AUTO`          |
