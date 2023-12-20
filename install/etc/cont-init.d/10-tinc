@@ -76,11 +76,13 @@ EOF
     cat <<EOF > /etc/tinc/"${NETWORK}"/tinc-up
 #!/bin/sh
 ifconfig ${INTERFACE} ${PRIVATE_IP} netmask 255.255.255.0
+${TINC_UP}
 EOF
 
     cat <<EOF > /etc/tinc/"${NETWORK}"/tinc-down
 #!/bin/sh
 ifconfig ${INTERFACE} down
+${TINC_DOWN}
 EOF
 
 	### Grab latest hosts entries from Git
