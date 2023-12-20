@@ -54,15 +54,14 @@ RUN source /assets/functions/00-container && \
     rm -rf /usr/src/*
 
 # squid
-ARG PUID=1000
-ARG PGID=1000
 
 RUN apk add --no-cache --purge -uU squid iptables iptables-legacy && \
     rm -rf /var/cache/apk/* /tmp/* && \
     sed -i '1 i\acl all src all' /etc/squid/squid.conf && \
     sed -i '2 i\http_access allow all' /etc/squid/squid.conf && \
-    echo 'access_log stdio:/var/log/tinc/squid_access.log' >> /etc/squid/squid.conf && \
-    echo 'cache_log stdio:/var/log/tinc/squid_cache.log' >> /etc/squid/squid.conf && \
+    echo 'logfile_rotate 0' >> /etc/squid/squid.conf && \
+    echo 'access_log none' >> /etc/squid/squid.conf && \
+    echo 'cache_log /dev/null' >> /etc/squid/squid.conf && \
     echo 'cache deny all' >> /etc/squid/squid.conf && \
     echo 'on_unsupported_protocol tunnel all' >> /etc/squid/squid.conf && \
     echo 'via off' >> /etc/squid/squid.conf && \
