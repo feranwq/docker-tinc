@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DOCKER_REPO: ${{ secrets.DOCKER_USERNAME }}/docker-tinc
-      DOCKER_PLATFORMS: linux/amd64,linux/arm,linux/arm64
+      DOCKER_PLATFORMS: linux/amd64,linux/arm64
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -24,6 +24,9 @@ jobs:
         with:
           images: |
             ${{ env.DOCKER_REPO }}
+          tags: |
+            type=raw,value=latest,enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
+            type=ref,event=branch
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker buildx
@@ -37,7 +40,8 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: true # push to docker hub
+          push: true
           platforms: ${{ env.DOCKER_PLATFORMS }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          file: Dockerfile.custom
